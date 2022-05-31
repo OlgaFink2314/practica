@@ -16,6 +16,22 @@ void printToFile(ofstream& fout, string* a, int n) {
         fout << a[i] << endl;
 }
 
+void bubble_sort(string* a, int n) {
+    string tmp;
+    bool flag = true;
+    for (int step = 1; flag == true && step <= n - 1; step++) {
+        flag = false;
+        for (int i = n - 1; i >= step; i--)
+
+            if (a[i] < a[i - 1]) {
+                tmp = a[i];
+                a[i] = a[i - 1];
+                a[i - 1] = tmp;
+                flag = true;
+            }
+    }
+}
+
 string filstr(ifstream &fin,int &n) {
     string source = "";
     char ch;
@@ -49,6 +65,22 @@ string* massalpha(string source, int& j,int n, int let[], int digit[])
     }
     return a;
 }
+
+void print_analysis(string source, int j, int t1, int t2, int let[], int  digit[]) {
+    ofstream fout("analysis.txt");
+    fout << "Введенный текст:" << endl;
+    fout << source << endl;
+    fout << "Вариант 1: Кириллица, По алфавиту, По возрастания, Учитывать числа, Сортировка Пузырьком" << endl;
+    fout << "Количество слов: " << j << endl;
+    fout << "Время сортировки: " << double(t2 - t1) / CLOCKS_PER_SEC << " sec" << endl;
+    fout << "Статистика( количество слов на каждую букву алфавита):" << endl;
+    for (int i = 0; i < M; i++)
+        fout << char(i + int('а')) << " : " << let[i] << endl;
+    for (int i = 0; i < 10; i++)
+        fout << char(i + int('0')) << " : " << digit[i] << endl;
+    fout.close();
+}
+
 int main() {
     int let[M]{ 0 };
     int digit[10]{ 0 };
